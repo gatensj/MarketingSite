@@ -1,0 +1,45 @@
+{% extends "blog/base1.html" %}
+{% block header %}
+	<header id="header">
+            <div class="nav-wrap is-fixed off-canvas header-fill shrinked" data-is-fill="true">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-2 brand-band">
+                            <div class="brand-wrap clearfix">
+                                <a href="{{ home_url }}" class="brand pull-left">
+                                    <img src="../../../../../static/images/bye_logo.png" class="byeLogo" alt="">
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="hidden-xs hidden-sm col-md-8 ">
+
+                            <ul class="carna-menu menu-highlight menu-smooth navMenuUL">
+                                <li><a href="{{ home_url }}#about">about</a></li>
+                                <li><a href="{{ home_url }}#news">news</a></li>
+                                <li><a href="{{ home_url }}#gallery">gallery</a></li>
+                                <li><a href="{{ home_url }}#ourwork">work</a></li>
+                                <li><a href="{{ home_url }}#services">services</a></li>
+                                <li><a href="{{ home_url }}#contact">contact</a></li>
+                            </ul>
+                            <!-- end of menu -->
+
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6 col-md-2 mm-button-band ">
+                            <button id="mm-menu-toggle" class="mm-menu-toggle">Toggle Menu<span></span>
+                            </button>
+                        </div>
+
+
+
+
+
+                    </div>
+                    <!-- end row -->
+                </div>
+                <!-- end container -->
+            </div>
+            <!-- end nav-wrap -->
+        </header>
+{% endblock %}

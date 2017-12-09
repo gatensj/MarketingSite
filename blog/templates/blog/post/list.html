@@ -1,0 +1,636 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+
+
+{% block title %}MarketingByE{% endblock %}
+
+
+{% block marquee %}
+
+	<!-- -->
+	<style>
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 205;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1200px;
+}
+
+
+	.intro-title
+	{
+	color:#{{marquee.color}} !important;
+	}
+
+	.story-bg
+	{
+	background-image: url("../../../../../../media/{{ marquee.image }}") !important;
+	}
+
+	.contactSection {
+	background-color: #222222;
+	background-image: url("../../../../../../media/map-image.png") !important;
+	background-position: center;
+	background-repeat: no-repeat;
+	padding:150px 0px;
+	}
+	</style>
+	<!-- -->
+
+	<!-- -->
+	<div class="marqueeHolder">
+	<h5 class="small-title"> {{ marquee.welcome_text }} </h5>
+	<h1 class="intro-title">{{ marquee.headline_text }}</h1>
+	<a href="{{ marquee.button_link }}" class="intro-more btn-main medium">{{ marquee.button_text }}</a>
+	</div>
+	<!-- -->
+
+{% endblock %}
+
+
+{% block about %}
+
+	<!-- -->
+	{% for title in titles %}
+		{% if title.section_number == 1 %}
+			<div class="text-center">
+
+				<h1 class="section-header">
+				<span class="{{ title.color_class }}">{{ title.name }}</span>
+				<span class="underline animated" data-animation="fullWidth"></span>
+				</h1>
+
+			</div>
+		{% endif %}
+	{% endfor %}
+	<!-- -->
+
+	<!-- / row -->
+	<div class="row">
+		{% for about in abouts %}
+
+	        <div class="col-md-5 col-sm-12">
+	            <p>{{ about.about_body }}</p>
+	        </div>
+	        <!-- / col-sm-5 -->
+	        <div class="col-md-7 hidden-xs hidden-sm">
+	        	<div class="aboutImgDIV">
+		            <div class="img-full animated" data-animation="fadeInRight">
+					<img src="../../../../../../media/{{ about.image }}" alt=""/>
+		            </div>
+	            </div>
+	        </div>
+	        <!-- / col-sm-6 -->
+
+		{% endfor %}
+    </div>
+	<!-- / row -->
+
+{% endblock %}
+
+
+{% block content %}
+
+	<!-- -->
+	{% for title in titles %}
+		{% if title.section_number == 2 %}
+			<div class="text-center">
+
+				<h1 class="section-header">
+				<span class="{{ title.color_class }}">{{ title.name }}</span>
+				<span class="underline animated" data-animation="fullWidth"></span>
+				</h1>
+
+			</div>
+		{% endif %}
+	{% endfor %}
+	<!-- -->
+
+	<!-- / row -->
+	<div class="row">
+		<div class="col-md-12 animated no-padding" data-animation="fadeIn">
+				<div class="box-side-details">
+
+					<div class="row">
+
+						{% for post in posts %}
+
+							<!-- -->
+							<div class="col-xs-12 col-sm-12 col-md-4">
+
+							<article class="article" itemscope="" itemtype="http://schema.org/Article">
+								<div class="articleHolderDIV">
+
+								<!-- article-image start -->
+								<a class="article-featured-image-wrapper" href="{{ post.get_absolute_url }}">
+									<img class="article-featured-image" src="../../../../../../media/{{ post.image }}" alt="{{ post.title }}">
+								</a>
+								<!-- article-image stop -->
+
+								<!-- article-header start -->
+								<header class="article-header">
+									<div class="articleHeaderDIV">
+										<h2 class="article-title" itemprop="name">
+										<a href="{{ post.get_absolute_url }}" title="{{ post.title }}" itemprop="url">{{ post.title }}</a>
+										</h2>
+									</div>
+								</header>
+								<!-- article-header stop -->
+
+								<!-- article-excerpt stop -->
+								<div class="article-excerpt" itemprop="description">
+									<p class="secondary">{{ post.short_description}}</p>
+								</div>
+								<!-- article-excerpt stop -->
+
+								<!-- article-footer start -->
+								<footer class="article-footer">
+									<div class="articleFooterDIV">
+
+									<!-- -->
+									<time class="article-footer-item article-published" pubdate="" date="{{ post.updated }}">
+									<span itemprop="datePublished">{{ post.updated }}</span>
+									</time>
+									<!-- -->
+
+									<!-- -->
+									<span class="sep article-footer-item">|</span>
+									<!-- -->
+
+									<!-- -->
+									<span class="article-share-count article-footer-item">
+									{% for tag in post.tags.all %}
+									<a href='{% url "blog:post_list_by_tag" tag.slug %}'>{{ tag.name }}</a>
+									{% endfor %}
+									</span>
+									<!-- -->
+
+									</div>
+								</footer>
+								<!-- article-footer stop -->
+
+								</div>
+							</article>
+							</div>
+							<!-- -->
+
+						{% endfor %}
+
+					</div>
+					{#  include "pagination.html" with page=posts #}
+
+				</div>
+
+		</div>
+	</div>
+	<!-- / row -->
+
+{% endblock %}
+
+
+{% block teams %}
+
+	<!-- -->
+	{% for title in titles %}
+		{% if title.section_number == 3 %}
+			<div class="text-center">
+
+				<h1 class="section-header">
+				<span class="{{ title.color_class }}">{{ title.name }}</span>
+				<span class="underline animated" data-animation="fullWidth"></span>
+				</h1>
+
+			</div>
+		{% endif %}
+	{% endfor %}
+	<!-- -->
+
+	<!-- / row -->
+	<div class="row">
+
+		{% for team in teams %}
+		<div class="col-md-3 col-sm-6">
+
+			<div class="teamIMGHolder">
+			<a href="#{{ team.name|cut:" " }}" class="team-block mag-lightbox">
+
+				<img src="../../../../../../media/{{ team.image }}" alt=""/>
+
+				<div class="team-block__details">
+
+					<h3>{{ team.name}}</h3>
+					<p>{{ team.person_title}}</p>
+
+					<div class="team-block__icon">
+						<span>{{ team.read_more_link_txt }}</span>
+						<i class="fa fa-plus"></i>
+					</div>
+
+				</div>
+
+			</a>
+			</div>
+
+			<div id="{{ team.name|cut:" " }}" class="team-details mfp-hide">
+
+				<h3 class="standard-title">{{ team.name}}</h3>
+				<p>{{ team.person_title}}</p>
+				<p>{{ team.bio }}</p>
+
+				<ul class="team-details__social-icons clearfix">
+
+					<li><a href="#"><i class="fa fa-facebook"></i></a>
+					</li>
+
+					<li><a href="#"><i class="fa fa-twitter"></i></a>
+					</li>
+
+					<li><a href="#"><i class="fa fa-google-plus"></i></a>
+					</li>
+
+				</ul>
+
+			</div>
+
+		</div>
+		{% endfor %}
+
+
+	</div>
+	<!-- / row -->
+
+{% endblock %}
+
+
+{% block gallery %}
+
+	<!-- -->
+	<!-- no title-->
+	<!-- -->
+
+	<!-- -->
+	<div class="row">
+		<div class="col-md-12 animated no-padding" data-animation="fadeIn">
+			<div class="innerGalleryDIV">
+
+			{% for gallery in gallerys %}
+
+				<div id="my-gallery" >
+
+					{% for photo in gallery.public %}
+					<img alt="{{ photo.title }}" src="{{ photo.get_display_url }}"
+						data-image="{{ photo.get_display_url }}"
+						data-description="{{ photo.title }}" />
+					{% endfor %}
+
+				</div>
+
+			{% endfor %}
+
+			</div>
+		</div>
+	</div>
+	<!-- -->
+
+{% endblock %}
+
+
+
+
+{% block whatWeDo %}
+
+	<!-- -->
+	{% for title in titles %}
+		{% if title.section_number == 9 %}
+			<div class="text-center">
+
+				<h1 class="section-header">
+				<span class="{{ title.color_class }}">{{ title.name }}</span>
+				<span class="underline animated" data-animation="fullWidth"></span>
+				</h1>
+
+			</div>
+		{% endif %}
+	{% endfor %}
+	<!-- -->
+
+	<!-- -->
+	<div class="row">
+		<div class="col-md-12 content-box-side animated no-padding" data-animation="fadeIn" data-animation-delay="200">
+			<p class="WhatWeCenter">{{whatwedos.whatwedo_body}}</p>
+		</div>
+	</div>
+	<!-- -->
+
+{% endblock %}
+
+
+{% block howWeDo %}
+
+	<!-- -->
+	{% for title in titles %}
+		{% if title.section_number == 10 %}
+			<div class="text-center">
+
+				<h1 class="section-header">
+				<span class="{{ title.color_class }}">{{ title.name }}</span>
+				<span class="underline animated" data-animation="fullWidth"></span>
+				</h1>
+
+			</div>
+		{% endif %}
+	{% endfor %}
+	<!-- -->
+
+	<!-- -->
+	<div class="row">
+
+		{% for howwedo in howwedos %}
+
+			<div class="col-md-6 content-box-side animated no-padding" data-animation="fadeIn" data-animation-delay="200">
+				<div class="outerWhyDIV">
+					<div class="innerWhyDIV">
+
+						<div class="row">
+							<div class="col-sm-3 col-md-3 innerWhyDIVleft"><div class="innerWhyDIVleftInner"><img class="img-responsive WhyImage" src="../../../../../../media/{{ howwedo.image }}" /></div></div>
+							<div class="col-sm-9 col-md-9 innerWhyDIVright">
+								<h3 class="howWeDoTitle">{{ howwedo.title }}</h3>
+								<p>{{ howwedo.description }}</p>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		{% endfor %}
+	</div>
+	<!-- -->
+
+{% endblock %}
+
+
+
+
+{% block services %}
+
+	<!-- -->
+	{% for title in titles %}
+		{% if title.section_number == 5 %}
+			<div class="text-center">
+
+				<h1 class="section-header">
+				<span class="{{ title.color_class }}">{{ title.name }}</span>
+				<span class="underline animated" data-animation="fullWidth"></span>
+				</h1>
+
+			</div>
+		{% endif %}
+	{% endfor %}
+	<!-- -->
+
+	<!-- -->
+	<div class="row">
+		{% for service in services %}
+			<div class="col-md-4 content-box-side animated no-padding" data-animation="fadeIn" data-animation-delay="200">
+				<div class="box-side-details">
+					<div class="box-side__header">
+
+					<i class="fa {{ service.glyph_icon }}"></i>
+					<h3 class="standard-title text-uppercase">{{ service.services_headline_text }}</h3>
+					<p>{{ service.services_body }}</p>
+
+
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+	<!-- -->
+
+{% endblock %}
+
+
+{% block wordcloud %}
+
+	<!-- -->
+	{% for title in titles %}
+		{% if title.section_number == 7 %}
+			<div class="text-center">
+
+				<h1 class="section-header">
+				<span class="{{ title.color_class }}">{{ title.name }}</span>
+				<span class="underline animated" data-animation="fullWidth"></span>
+				</h1>
+
+			</div>
+		{% endif %}
+	{% endfor %}
+	<!-- -->
+
+	<!-- -->
+	<div class="row">
+		<div class="col-md-12 animated no-padding" data-animation="fadeIn">
+			<div class="box-side-details">
+
+				<div class="bubble">
+
+					<h4 class="bubble-center">
+					<span>{{ skill_title.name }}</span>
+					</h4>
+
+					<ul>
+						{% for skill in skills %}
+						<li class="animated {{ skill.css_class }}" data-animation="bouncIn"><span>{{ skill.name }}</span></li>
+						{% endfor %}
+					</ul>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- -->
+
+{% endblock %}
+
+
+{% block partners %}
+
+	<!-- -->
+	{% for title in titles %}
+		{% if title.section_number == 4 %}
+			<div class="text-center">
+
+				<h1 class="section-header">
+				<span class="{{ title.color_class }}">{{ title.name }}</span>
+				<span class="underline animated" data-animation="fullWidth"></span>
+				</h1>
+
+			</div>
+		{% endif %}
+	{% endfor %}
+	<!-- -->
+
+	<!-- -->
+	<div class="row">
+		<div class="col-md-12 animated no-padding" data-animation="fadeIn">
+				<div class="box-side-details">
+					<div class="row">
+
+					<!-- -->
+					{% for partner in partners %}
+					<div class="col-md-3 col-sm-6"><div class="techPartnersDIV"><a href="{{ partner.link }}" title="{{ partner.link_txt }}"><img alt="" class="img-responsive img-centered" src="../../../../../../media/{{ partner.image }}"  /></a></div></div>
+					{% endfor %}
+					<!-- -->
+
+					</div>
+				</div>
+		</div>
+	</div>
+	<!-- -->
+
+{% endblock %}
+
+
+{% block testimonials %}
+
+	<!-- -->
+	{% for title in titles %}
+		{% if title.section_number == 8 %}
+			<div class="text-center">
+
+				<h1 class="section-header">
+				<span class="{{ title.color_class }}">{{ title.name }}</span>
+				<span class="underline animated" data-animation="fullWidth"></span>
+				</h1>
+
+			</div>
+		{% endif %}
+	{% endfor %}
+	<!-- -->
+
+	<!-- -->
+	<div class="row">
+
+		<div class="col-md-8 col-md-offset-2">
+
+			<ul class="my-bx-slider" data-bx-delay="1000" data-bx-mode="fade" data-bx-easing="easeInOutQuint" data-bx-auto-play="true" data-bx-control="true" data-bx-auto-hover="true" data-bx-pager="true">
+
+				{% for testimonial in testimonials %}
+					<li>
+						<div class="item">
+							{# <img src="../../../../../../media/{{ testimonial.image }}" alt="" / > #}
+							<p class="testimonial-text">{{ testimonial.testimonial_text }}</p>
+							<h2 class="standard-title">{{ testimonial.name }}</h2>
+							<span>{{ testimonial.title }}</span>
+
+						</div>
+					</li>
+				{% endfor %}
+
+			</ul>
+			<!--end bx slider-->
+
+		</div>
+		<!-- end col-md-12 -->
+
+	</div>
+	<!-- / row -->
+
+{% endblock %}
+
+
+{% block contact %}
+
+	<!-- -->
+	{% for title in titles %}
+		{% if title.section_number == 6 %}
+			<div class="text-center">
+
+				<h1 class="section-header">
+				<span class="{{ title.color_class }}">{{ title.name }}</span>
+				<span class="underline animated" data-animation="fullWidth"></span>
+				</h1>
+
+			</div>
+		{% endif %}
+	{% endfor %}
+	<!-- -->
+
+	<!-- -->
+	<div class="row">
+		<div class="col-lg-12">
+
+			<div class="innerContactDIV">
+
+				<!-- -->
+				<h3 class="section-subheading text-muted contact-txt">Whether you're just starting out or need help with an existing project, we're here to help.<br> You can schedule a meeting now by using the form below.</h3>
+				<!-- -->
+
+				<!--    <form name="sentMessage" id="contactForm" novalidate>   -->
+				<form id="feedback" action="AJAX/feedback.php" enctype="multipart/form-data" method="post">
+					<div id="response" style="display: none;"><!--This will hold our error messages and the response from the server. --></div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<input name="name" type="text" id="name" class="form-control required" placeholder="Your Name *" required="" data-validation-required-message="Please enter your name.">
+								<p class="help-block text-danger"></p>
+							</div>
+							<div class="form-group">
+								<input name="email" type="text" id="email" class="form-control required" placeholder="Your Email *" required="" data-validation-required-message="Please enter your email address.">
+								<p class="help-block text-danger"></p>
+							</div>
+							<div class="form-group">
+								<input name="phone" type="tel" id="phone" class="form-control" placeholder="Your Phone *" required="" data-validation-required-message="Please enter your phone number.">
+								<p class="help-block text-danger"></p>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<textarea name="message" id="message" class="form-control myTextArea required" placeholder="Your Message *" required="" data-validation-required-message="Please enter a message."></textarea>
+								<p class="help-block text-danger"></p>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+						<div class="col-lg-12 text-center">
+							<div id="success"></div>
+							<button type="submit" class="btn btn-primary btn-large active myBTN" name="submit" id="submit">Send Message</button>
+
+							<!-- -->
+							<div class="inputs">
+								<input type="hidden" name="honeypot" id="honeypot" value="http://">
+								<input type="hidden" name="humancheck" id="humancheck" class="clear" value="">
+							</div>
+							<!-- -->
+
+
+						</div>
+					</div>
+				</form>
+				<!-- -->
+
+			</div>
+		</div>
+	</div>
+	<!-- -->
+
+{% endblock %}
