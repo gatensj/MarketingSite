@@ -17,8 +17,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open('mysite/secret_key.txt') as f:
-    SECRET_KEY = f.read().strip()
+with open('mysite/secrets/secret_key.txt') as a:
+    SECRET_KEY = a.read().strip()
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -26,7 +26,7 @@ DEBUG = True
 # DEBUG = False
 
 # Application definition
-ALLOWED_HOSTS = ['vagrant.wharton.upenn.edu', 'localhost']
+ALLOWED_HOSTS = ['vagrant.wharton.upenn.edu', 'localhost', 'marketingbye.com']
 
 SITE_ID = 2
 
@@ -117,15 +117,26 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 WAGTAIL_SITE_NAME = 'MarketingByE'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+with open('mysite/secrets/db_name.txt') as b:
+    DB_NAME = b.read().strip()
+
+with open('mysite/secrets/db_user.txt') as c:
+    DB_USER = c.read().strip()
+
+with open('mysite/secrets/db_pw.txt') as d:
+    DB_PW = d.read().strip()
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PW,
+        'HOST': 'vagrant.wharton.upenn.edu',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -168,13 +179,13 @@ STATIC_JS_DIR = os.path.join(STATIC_ROOT, "js")
 
 
 # EMAIL SETUP
-with open('mysite/email_host.txt') as i:
-    EMAIL_HOST = i.read().strip()
+with open('mysite/secrets/email_host.txt') as e:
+    EMAIL_HOST = e.read().strip()
 
-with open('mysite/email_host_user.txt') as j:
-    EMAIL_HOST_USER = j.read().strip()
+with open('mysite/secrets/email_host_user.txt') as f:
+    EMAIL_HOST_USER = f.read().strip()
 
-with open('mysite/email_pw.txt') as g:
+with open('mysite/secrets/email_pw.txt') as g:
     EMAIL_HOST_PASSWORD = g.read().strip()
 
 EMAIL_PORT = 587
@@ -218,17 +229,6 @@ HAYSTACK_CONNECTIONS = {
         'URL': 'http://vagrant.upenn.edu/solr/blog'
     },
 }
-
-
-############## COMMENTED OUT ON PURPOSE
-# MEDIA_URL = "http://vagrant.wharton.upenn.edu:8000/"
-# TINYMCE_JS_URL = os.path.join("static/django-tinymce/tinymce/static/tiny_mce/tiny_mce.js")
-# TINYMCE_JS_URL = "static/django-tinymce/tinymce/static/tiny_mce/tiny_mce.js"
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-# TINYMCE_JS_ROOT = os.path.join(STATIC_JS_DIR, "tiny_mce")
-# TINYMCE_JS_URL = os.path.join(TINYMCE_JS_ROOT, "tiny_mce.js")
-# TINYMCE_JS_ROOT = "static/django-tinymce/tinymce/static/tiny_mce"
-# HOME_URL = 'http://vagrant.wharton.upenn.edu:8000/blog/'
 
 
 # IF DEBUG IS TRUE Setup
