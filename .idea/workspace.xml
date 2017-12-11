@@ -2,16 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f45697f4-c42e-44f4-955c-df0ba13573d3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mysite/secrets/db_pw.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mysite/settings/dev.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mysite/settings/prod.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/mysite/db_pw.txt" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/mysite/email_host.txt" afterPath="$PROJECT_DIR$/mysite/secrets/email_host.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/mysite/email_host_user.txt" afterPath="$PROJECT_DIR$/mysite/secrets/email_host_user.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/mysite/email_pw.txt" afterPath="$PROJECT_DIR$/mysite/secrets/email_pw.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/mysite/secret_key.txt" afterPath="$PROJECT_DIR$/mysite/secrets/secret_key.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/settings.py" afterPath="$PROJECT_DIR$/mysite/settings.py" />
     </list>
@@ -27,8 +17,8 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysite/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7888">
-              <caret line="232" column="0" lean-forward="true" selection-start-line="232" selection-start-column="0" selection-end-line="232" selection-end-column="0" />
+            <state relative-caret-position="816">
+              <caret line="24" column="2" lean-forward="false" selection-start-line="24" selection-start-column="2" selection-end-line="24" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -355,8 +345,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7888">
-          <caret line="232" column="0" lean-forward="true" selection-start-line="232" selection-start-column="0" selection-end-line="232" selection-end-column="0" />
+        <state relative-caret-position="816">
+          <caret line="24" column="2" lean-forward="false" selection-start-line="24" selection-start-column="2" selection-end-line="24" selection-end-column="2" />
           <folding />
         </state>
       </provider>
