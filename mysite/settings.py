@@ -261,18 +261,6 @@ DB_PW = env('DB_PW', default='NOTDB_PW')
 
 #DB settings
 '''
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'zappa_django_utils.db.backends.s3sqlite',
-        'NAME': 'sqlite.db',
-        'BUCKET': 'marketingbye122222017'
-    }
-}
-
-'''
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -283,6 +271,18 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+
+
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'zappa_django_utils.db.backends.s3sqlite',
+        'NAME': 'sqlite.db',
+        'BUCKET': 'marketingbye122222017'
+    }
+}
+
 
 #####################################################################
 
