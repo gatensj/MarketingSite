@@ -9,23 +9,43 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
+import environ
 import os
 
+root = environ.Path(__file__) - 3 # three folder back (/a/b/c/ - 3 = /)
+env = environ.Env(DEBUG=(bool, False),) # set default values and casting
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+SITE_ROOT = root()
+
+if 'ENV' in os.environ and os.environ['ENV'] in ('dev', 'prod'):
+    ENVIRONMENT = os.environ['ENV']
+else:
+    ENVIRONMENT = "dev"
+
+environ.Env.read_env(
+    '{0}/mysite/config/settings/{1}.env'.format(
+        SITE_ROOT,
+        ENVIRONMENT,
+    )
+)
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
 with open('mysite/secrets/secret_key.txt') as a:
     SECRET_KEY = a.read().strip()
+'''
+SECRET_KEY = env('SECRET_KEY', default='NOTASECRETKEY')
+'''
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
-# Application definition
+
 ALLOWED_HOSTS = ['vagrant.wharton.upenn.edu', 'localhost', 'marketingbye.com']
 
 SITE_ID = 2
@@ -47,6 +67,8 @@ PREREQ_APPS = [
     'homepage',
     'photologue',
     'sortedm2m',
+    'django_s3_storage',
+    'zappa_django_utils',
     'wagtail.wagtailcore',
     'wagtail.wagtailadmin',
     'wagtail.wagtaildocs',
@@ -117,6 +139,111 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 WAGTAIL_SITE_NAME = 'MarketingByE'
 
 
+
+
+#####################################################################
+
+
+#Figure this out
+'''
+DEFAULT_FILE_STORAGE = 'django_s3_storage.storage.S3Storage'
+STATICFILES_STORAGE = 'django_s3_storage.storage.StaticS3Storage'
+'''
+
+
+#AWS settings
+with open('mysite/secrets/aws_region.txt') as b1:
+    AWS_REGION = b1.read().strip()
+with open('mysite/secrets/aws_access_key_id.txt') as b2:
+    AWS_ACCESS_KEY_ID = b2.read().strip()
+with open('mysite/secrets/aws_secret_access_key.txt') as b3:
+    AWS_SECRET_ACCESS_KEY = b3.read().strip()
+'''
+# The AWS region to connect to.
+AWS_REGION = env('AWS_REGION', default='NOTAWS_REGION')
+# The AWS access key to use.
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default='NOTAWS_ACCESS_KEY_ID')
+# The AWS secret access key to use.
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', default='NOTAWS_SECRET_ACCESS_KEY')
+'''
+
+
+#New settings
+# The name of the bucket to store files in.
+AWS_S3_BUCKET_NAME = "marketingbye122222017"
+
+# How to construct S3 URLs ("auto", "path", "virtual").
+AWS_S3_ADDRESSING_STYLE = "auto"
+
+# The full URL to the S3 endpoint. Leave blank to use the default region URL.
+AWS_S3_ENDPOINT_URL = ""
+
+# A prefix to be applied to every stored file. This will be joined to every filename using the "/" separator.
+AWS_S3_KEY_PREFIX = ""
+
+# Whether to enable authentication for stored files. If True, then generated URLs will include an authentication
+# token valid for `AWS_S3_MAX_AGE_SECONDS`. If False, then generated URLs will not include an authentication token,
+# and their permissions will be set to "public-read".
+AWS_S3_BUCKET_AUTH = True
+
+# How long generated URLs are valid for. This affects the expiry of authentication tokens if `AWS_S3_BUCKET_AUTH`
+# is True. It also affects the "Cache-Control" header of the files.
+# Important: Changing this setting will not affect existing files.
+AWS_S3_MAX_AGE_SECONDS = 60 * 60  # 1 hours.
+
+# A URL prefix to be used for generated URLs. This is useful if your bucket is served through a CDN. This setting
+# cannot be used with `AWS_S3_BUCKET_AUTH`.
+AWS_S3_PUBLIC_URL = ""
+
+# If True, then files will be stored with reduced redundancy. Check the S3 documentation and make sure you
+# understand the consequences before enabling.
+# Important: Changing this setting will not affect existing files.
+AWS_S3_REDUCED_REDUNDANCY = False
+
+# The Content-Disposition header used when the file is downloaded. This can be a string, or a function taking a
+# single `name` argument.
+# Important: Changing this setting will not affect existing files.
+AWS_S3_CONTENT_DISPOSITION = ""
+
+# The Content-Language header used when the file is downloaded. This can be a string, or a function taking a
+# single `name` argument.
+# Important: Changing this setting will not affect existing files.
+AWS_S3_CONTENT_LANGUAGE = ""
+
+# A mapping of custom metadata for each file. Each value can be a string, or a function taking a
+# single `name` argument.
+# Important: Changing this setting will not affect existing files.
+AWS_S3_METADATA = {}
+
+# If True, then files will be stored using server-side encryption.
+# Important: Changing this setting will not affect existing files.
+AWS_S3_ENCRYPT_KEY = False
+
+# If True, then text files will be stored using gzip content encoding. Files will only be gzipped if their
+# compressed size is smaller than their uncompressed size.
+# Important: Changing this setting will not affect existing files.
+AWS_S3_GZIP = True
+
+# The signature version to use for S3 requests.
+AWS_S3_SIGNATURE_VERSION = None
+
+# If True, then files with the same name will overwrite each other. By default it's set to False to have
+# extra characters appended.
+AWS_S3_FILE_OVERWRITE =  False
+
+#AWS_S3_BUCKET_AUTH_STATIC = False
+#AWS_S3_MAX_AGE_SECONDS_CACHED_STATIC = 60 * 60 * 24 * 265  # 1 year.
+#AWS_S3_BUCKET_AUTH = False
+#AWS_S3_MAX_AGE_SECONDS = 60 * 60 * 24 * 365  # 1 year.
+
+
+#####################################################################
+
+
+
+
+#####################################################################
+#DB var settings
 with open('mysite/secrets/db_name.txt') as b:
     DB_NAME = b.read().strip()
 
@@ -125,7 +252,26 @@ with open('mysite/secrets/db_user.txt') as c:
 
 with open('mysite/secrets/db_pw.txt') as d:
     DB_PW = d.read().strip()
+'''
+DB_NAME = env('DB_NAME', default='NOTDB_NAME')
+DB_USER = env('DB_USER', default='NOTDB_USER')
+DB_PW = env('DB_PW', default='NOTDB_PW')
+'''
 
+
+#DB settings
+'''
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'zappa_django_utils.db.backends.s3sqlite',
+        'NAME': 'sqlite.db',
+        'BUCKET': 'marketingbye122222017'
+    }
+}
+
+'''
 
 DATABASES = {
     'default': {
@@ -138,8 +284,11 @@ DATABASES = {
     }
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
+#####################################################################
+
+
+
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -155,9 +304,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.11/topics/i18n/
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -168,14 +314,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+STATIC_ROOT = os.path.join(BASE_DIR, '/blog/static/')
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-STATIC_URL = '/static/'
-
-STATIC_JS_DIR = os.path.join(STATIC_ROOT, "js")
+STATIC_URL = '/blog/static/'
 
 
 # EMAIL SETUP
@@ -187,19 +328,21 @@ with open('mysite/secrets/email_host_user.txt') as f:
 
 with open('mysite/secrets/email_pw.txt') as g:
     EMAIL_HOST_PASSWORD = g.read().strip()
+'''
+EMAIL_HOST = env('EMAIL_HOST', default='NOTEMAIL_HOST')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='NOTEMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='NOTEMAIL_HOST_PASSWORD')
+'''
 
 EMAIL_PORT = 587
 
 EMAIL_USE_TLS = True
 
 
-# MEDIA SETUP
 MEDIA_URL = "/media/"
 
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "mysite/uploads")
 
-
-# TINYMCE SETUP
 TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, "tiny_mce")
 
 TINYMCE_JS_URL = os.path.join(TINYMCE_JS_ROOT, "tiny_mce.js")
@@ -215,14 +358,10 @@ TINYMCE_SPELLCHECKER = True
 
 TINYMCE_COMPRESSOR = True
 
-
-# REDACTOR SETUP
 REDACTOR_OPTIONS = {'lang': 'en'}
 
 REDACTOR_UPLOAD = MEDIA_ROOT
 
-
-# HAYSTACK SETUP
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.solr_backend.SolrEngine',

@@ -5,3 +5,5 @@ wagtailerrorpages==1.1.5
 wagtailgridder==0.9.18
 django-modelcluster>=3.1
 git+https://github.com/FlipperPA/wagtailtinymce.git
+wagtailcodeblock
+wagtailcontentstream==0.2.3
