@@ -46,7 +46,7 @@ DEBUG = True
 # DEBUG = False
 
 
-ALLOWED_HOSTS = ['vagrant.wharton.upenn.edu', 'localhost', 'marketingbye.com']
+ALLOWED_HOSTS = ['vagrant.wharton.upenn.edu', 'localhost', 'marketingbye.com', 'opoa7vxe2l.execute-api.us-east-1.amazonaws.com']
 
 SITE_ID = 2
 
@@ -271,7 +271,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
+ 
 
 
 '''
