@@ -33,17 +33,16 @@ environ.Env.read_env(
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
+####################################################################################
 with open('mysite/secrets/secret_key.txt') as a:
     SECRET_KEY = a.read().strip()
 '''
 SECRET_KEY = env('SECRET_KEY', default='NOTASECRETKEY')
 '''
 
-
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING: don't run with debug turned on in production! # DEBUG = False
 DEBUG = True
-# DEBUG = False
+####################################################################################
 
 
 ALLOWED_HOSTS = ['vagrant.wharton.upenn.edu', 'localhost', 'marketingbye.com', 'opoa7vxe2l.execute-api.us-east-1.amazonaws.com']
@@ -67,7 +66,7 @@ PREREQ_APPS = [
     'homepage',
     'photologue',
     'sortedm2m',
-    'django_s3_storage',
+    'storages',
     'zappa_django_utils',
     'wagtail.wagtailcore',
     'wagtail.wagtailadmin',
@@ -139,110 +138,77 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 WAGTAIL_SITE_NAME = 'MarketingByE'
 
 
+########################################################################################################################################################################
 
-
-#####################################################################
-
-
-#Figure this out
-'''
-DEFAULT_FILE_STORAGE = 'django_s3_storage.storage.S3Storage'
-STATICFILES_STORAGE = 'django_s3_storage.storage.StaticS3Storage'
-'''
-
-
+####################################################################################
 #AWS settings
-with open('mysite/secrets/aws_region.txt') as b1:
-    AWS_REGION = b1.read().strip()
-with open('mysite/secrets/aws_access_key_id.txt') as b2:
-    AWS_ACCESS_KEY_ID = b2.read().strip()
-with open('mysite/secrets/aws_secret_access_key.txt') as b3:
-    AWS_SECRET_ACCESS_KEY = b3.read().strip()
 '''
 # The AWS region to connect to.
 AWS_REGION = env('AWS_REGION', default='NOTAWS_REGION')
+
 # The AWS access key to use.
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default='NOTAWS_ACCESS_KEY_ID')
+
 # The AWS secret access key to use.
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', default='NOTAWS_SECRET_ACCESS_KEY')
 '''
-
-
-#New settings
-# The name of the bucket to store files in.
-AWS_S3_BUCKET_NAME = "marketingbye122222017"
-
-# How to construct S3 URLs ("auto", "path", "virtual").
-AWS_S3_ADDRESSING_STYLE = "auto"
-
-# The full URL to the S3 endpoint. Leave blank to use the default region URL.
-AWS_S3_ENDPOINT_URL = ""
-
-# A prefix to be applied to every stored file. This will be joined to every filename using the "/" separator.
-AWS_S3_KEY_PREFIX = ""
-
-# Whether to enable authentication for stored files. If True, then generated URLs will include an authentication
-# token valid for `AWS_S3_MAX_AGE_SECONDS`. If False, then generated URLs will not include an authentication token,
-# and their permissions will be set to "public-read".
-AWS_S3_BUCKET_AUTH = True
-
-# How long generated URLs are valid for. This affects the expiry of authentication tokens if `AWS_S3_BUCKET_AUTH`
-# is True. It also affects the "Cache-Control" header of the files.
-# Important: Changing this setting will not affect existing files.
-AWS_S3_MAX_AGE_SECONDS = 60 * 60  # 1 hours.
-
-# A URL prefix to be used for generated URLs. This is useful if your bucket is served through a CDN. This setting
-# cannot be used with `AWS_S3_BUCKET_AUTH`.
-AWS_S3_PUBLIC_URL = ""
-
-# If True, then files will be stored with reduced redundancy. Check the S3 documentation and make sure you
-# understand the consequences before enabling.
-# Important: Changing this setting will not affect existing files.
-AWS_S3_REDUCED_REDUNDANCY = False
-
-# The Content-Disposition header used when the file is downloaded. This can be a string, or a function taking a
-# single `name` argument.
-# Important: Changing this setting will not affect existing files.
-AWS_S3_CONTENT_DISPOSITION = ""
-
-# The Content-Language header used when the file is downloaded. This can be a string, or a function taking a
-# single `name` argument.
-# Important: Changing this setting will not affect existing files.
-AWS_S3_CONTENT_LANGUAGE = ""
-
-# A mapping of custom metadata for each file. Each value can be a string, or a function taking a
-# single `name` argument.
-# Important: Changing this setting will not affect existing files.
-AWS_S3_METADATA = {}
-
-# If True, then files will be stored using server-side encryption.
-# Important: Changing this setting will not affect existing files.
-AWS_S3_ENCRYPT_KEY = False
-
-# If True, then text files will be stored using gzip content encoding. Files will only be gzipped if their
-# compressed size is smaller than their uncompressed size.
-# Important: Changing this setting will not affect existing files.
-AWS_S3_GZIP = True
-
-# The signature version to use for S3 requests.
-AWS_S3_SIGNATURE_VERSION = None
-
-# If True, then files with the same name will overwrite each other. By default it's set to False to have
-# extra characters appended.
-AWS_S3_FILE_OVERWRITE =  False
-
-#AWS_S3_BUCKET_AUTH_STATIC = False
-#AWS_S3_MAX_AGE_SECONDS_CACHED_STATIC = 60 * 60 * 24 * 265  # 1 year.
-#AWS_S3_BUCKET_AUTH = False
-#AWS_S3_MAX_AGE_SECONDS = 60 * 60 * 24 * 365  # 1 year.
-
-
-#####################################################################
+####################################################################################
 
 
 
 
-#####################################################################
+####################################################################################
+#Figure this out - multiple mediator regression model
+with open('mysite/secrets/aws_region.txt') as b1:
+    AWS_REGION = b1.read().strip()
+
+with open('mysite/secrets/aws_access_key_id.txt') as b2:
+    AWS_ACCESS_KEY_ID = b2.read().strip()
+
+with open('mysite/secrets/aws_secret_access_key.txt') as b3:
+    AWS_SECRET_ACCESS_KEY = b3.read().strip()
+
+AWS_S3_SECURE_URLS = False
+
+AWS_STORAGE_BUCKET_NAME = 'marketingbye122222017'
+
+AWS_S3_CUSTOM_DOMAIN = 'marketingbye122222017.s3-website-us-east-1.amazonaws.com/mysite'
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = '/blog/static'
+
+AWS_S3_FILE_OVERWRITE = False
+
+STATIC_URL = 'http://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+
+STATIC_ROOT = os.path.join(BASE_DIR, '/blog/static/')
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+STATICFILES_LOCATION = 'blog/static'
+
+MEDIAFILES_LOCATION = 'mysite/uploads'
+
+DEFAULT_FILE_STORAGE = 'mysite.custom_storages.MediaStorage'
+
+MEDIA_URL = "http://marketingbye122222017.s3-website-us-east-1.amazonaws.com/mysite/uploads/"
+
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "uploads")
+
+#BASE_DIR_MEDIA = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+#AWS_S3_CUSTOM_DOMAIN_MEDIA = 'marketingbye122222017.s3-website-us-east-1.amazonaws.com'
+#AWS_MEDIA_LOCATION = 'uploads'
+#MEDIA_URL = 'http://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN_MEDIA, AWS_MEDIA_LOCATION)
+#MEDIA_ROOT = os.path.join(BASE_DIR_MEDIA, '/uploads/')
+
+####################################################################################
+
+
+
+
+####################################################################################
 #DB var settings
 with open('mysite/secrets/db_name.txt') as b:
     DB_NAME = b.read().strip()
@@ -252,15 +218,24 @@ with open('mysite/secrets/db_user.txt') as c:
 
 with open('mysite/secrets/db_pw.txt') as d:
     DB_PW = d.read().strip()
+
 '''
 DB_NAME = env('DB_NAME', default='NOTDB_NAME')
+
 DB_USER = env('DB_USER', default='NOTDB_USER')
+
 DB_PW = env('DB_PW', default='NOTDB_PW')
 '''
 
-
-#DB settings
 '''
+DATABASES = {
+    'default': {
+        'ENGINE': 'zappa_django_utils.db.backends.s3sqlite',
+        'NAME': 'db.sqlite3',
+        'BUCKET': 'marketingbye122222017'
+    }
+}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -271,26 +246,59 @@ DATABASES = {
         'PORT': '5432',
     }
 }
- 
 
 
-'''
 DATABASES = {
     'default': {
-        'ENGINE': 'zappa_django_utils.db.backends.s3sqlite',
-        'NAME': 'sqlite.db',
-        'BUCKET': 'marketingbye122222017'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
 
-#####################################################################
+'''
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+####################################################################################
 
 
+
+
+####################################################################################
+# EMAIL SETUP
+with open('mysite/secrets/email_host.txt') as e:
+    EMAIL_HOST = e.read().strip()
+
+with open('mysite/secrets/email_host_user.txt') as f:
+    EMAIL_HOST_USER = f.read().strip()
+
+with open('mysite/secrets/email_pw.txt') as g:
+    EMAIL_HOST_PASSWORD = g.read().strip()
+
+'''
+EMAIL_HOST = env('EMAIL_HOST', default='NOTEMAIL_HOST')
+
+EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='NOTEMAIL_HOST_USER')
+
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='NOTEMAIL_HOST_PASSWORD')
+'''
+
+EMAIL_PORT = 587
+
+EMAIL_USE_TLS = True
+####################################################################################
+
+########################################################################################################################################################################
 
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
+   {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
@@ -313,35 +321,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-STATIC_ROOT = os.path.join(BASE_DIR, '/blog/static/')
-
-STATIC_URL = '/blog/static/'
-
-
-# EMAIL SETUP
-with open('mysite/secrets/email_host.txt') as e:
-    EMAIL_HOST = e.read().strip()
-
-with open('mysite/secrets/email_host_user.txt') as f:
-    EMAIL_HOST_USER = f.read().strip()
-
-with open('mysite/secrets/email_pw.txt') as g:
-    EMAIL_HOST_PASSWORD = g.read().strip()
-'''
-EMAIL_HOST = env('EMAIL_HOST', default='NOTEMAIL_HOST')
-EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='NOTEMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='NOTEMAIL_HOST_PASSWORD')
-'''
-
-EMAIL_PORT = 587
-
-EMAIL_USE_TLS = True
-
-
-MEDIA_URL = "/media/"
-
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "mysite/uploads")
 
 TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, "tiny_mce")
 
@@ -390,3 +369,4 @@ if DEBUG is True:
     MIDDLEWARE_CLASSES += [
         'debug_toolbar.middleware.DebugToolbarMiddleware',
     ]
+

@@ -41,12 +41,12 @@
 
 	.story-bg
 	{
-	background-image: url("../../../../../../media/{{ marquee.image }}") !important;
+	background-image: url("{{ media_url }}{{ marquee.image }}") !important;
 	}
 
 	.contactSection {
 	background-color: #222222;
-	background-image: url("../../../../../../media/map-image.png") !important;
+	background-image: url("{{ media_url }}map-image.png") !important;
 	background-position: center;
 	background-repeat: no-repeat;
 	padding:150px 0px;
@@ -93,7 +93,7 @@
 	        <div class="col-md-7 hidden-xs hidden-sm">
 	        	<div class="aboutImgDIV">
 		            <div class="img-full animated" data-animation="fadeInRight">
-					<img src="../../../../../../media/{{ about.image }}" alt=""/>
+					<img src="{{ media_url }}{{ about.image }}" alt=""/>
 		            </div>
 	            </div>
 	        </div>
@@ -140,7 +140,7 @@
 
 								<!-- article-image start -->
 								<a class="article-featured-image-wrapper" href="{{ post.get_absolute_url }}">
-									<img class="article-featured-image" src="../../../../../../media/{{ post.image }}" alt="{{ post.title }}">
+									<img class="article-featured-image" src="{{ media_url }}{{ post.image }}" alt="{{ post.title }}">
 								</a>
 								<!-- article-image stop -->
 
@@ -231,7 +231,7 @@
 			<div class="teamIMGHolder">
 			<a href="#{{ team.name|cut:" " }}" class="team-block mag-lightbox">
 
-				<img src="../../../../../../media/{{ team.image }}" alt=""/>
+				<img src="{{ media_url }}{{ team.image }}" alt=""/>
 
 				<div class="team-block__details">
 
@@ -295,8 +295,8 @@
 				<div id="my-gallery" >
 
 					{% for photo in gallery.public %}
-					<img alt="{{ photo.title }}" src="{{ photo.get_display_url }}"
-						data-image="{{ photo.get_display_url }}"
+					<img alt="{{ photo.title }}" src="{{ media_url }}{{ photo.image }}"
+						data-image="{{ media_url }}{{ photo.image }}"
 						data-description="{{ photo.title }}" />
 					{% endfor %}
 
@@ -369,7 +369,7 @@
 					<div class="innerWhyDIV">
 
 						<div class="row">
-							<div class="col-sm-3 col-md-3 innerWhyDIVleft"><div class="innerWhyDIVleftInner"><img class="img-responsive WhyImage" src="../../../../../../media/{{ howwedo.image }}" /></div></div>
+							<div class="col-sm-3 col-md-3 innerWhyDIVleft"><div class="innerWhyDIVleftInner"><img class="img-responsive WhyImage" src="{{ media_url }}{{ howwedo.image }}" /></div></div>
 							<div class="col-sm-9 col-md-9 innerWhyDIVright">
 								<h3 class="howWeDoTitle">{{ howwedo.title }}</h3>
 								<p>{{ howwedo.description }}</p>
@@ -497,7 +497,7 @@
 
 					<!-- -->
 					{% for partner in partners %}
-					<div class="col-md-3 col-sm-6"><div class="techPartnersDIV"><a href="{{ partner.link }}" title="{{ partner.link_txt }}"><img alt="" class="img-responsive img-centered" src="../../../../../../media/{{ partner.image }}"  /></a></div></div>
+					<div class="col-md-3 col-sm-6"><div class="techPartnersDIV"><a href="{{ partner.link }}" title="{{ partner.link_txt }}"><img alt="" class="img-responsive img-centered" src="{{ media_url }}{{ partner.image }}"  /></a></div></div>
 					{% endfor %}
 					<!-- -->
 

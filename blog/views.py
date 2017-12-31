@@ -10,6 +10,7 @@ from haystack.query import SearchQuerySet
 from cms.models import Page
 from homepage.models import About, Marquee, Services, Team, Skill, Testimonial, Partner, Title, WhatWeDo, HowWeDo
 from photologue.models import Gallery, Photo
+from mysite.settings import MEDIA_URL
 
 
 def post_list(request, tag_slug=None):
@@ -28,6 +29,7 @@ def post_list(request, tag_slug=None):
     titles = Title.objects.all().filter(active='True').order_by('-section_number')
     whatwedos = WhatWeDo.objects.get(active='True')
     howwedos = HowWeDo.objects.all().filter(active='True').order_by('-release_date')[:4]
+    media_url = MEDIA_URL
 
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
@@ -43,7 +45,7 @@ def post_list(request, tag_slug=None):
     except EmptyPage:
         # If page is out of range deliver last page of results
         posts = paginator.page(paginator.num_pages)
-    return render(request, 'blog/post/list.html', {'page': page, 'posts': posts, 'tag': tag, 'page_list': page_list, 'marquee': marquee, 'services': services, 'abouts': abouts, 'teams': teams, 'gallerys': gallerys, 'skills': skills, 'skill_title': skill_title, 'testimonials': testimonials, 'partners': partners, 'titles': titles, 'whatwedos': whatwedos, 'howwedos': howwedos,})
+    return render(request, 'blog/post/list.html', {'page': page, 'posts': posts, 'tag': tag, 'page_list': page_list, 'marquee': marquee, 'services': services, 'abouts': abouts, 'teams': teams, 'gallerys': gallerys, 'skills': skills, 'skill_title': skill_title, 'testimonials': testimonials, 'partners': partners, 'titles': titles, 'whatwedos': whatwedos, 'howwedos': howwedos, 'media_url': media_url,})
 
 
 class PostListView(ListView):
@@ -76,6 +78,7 @@ class PostListView(ListView):
 
 def post_detail(request, year, month, day, post):
     post = get_object_or_404(Post, slug=post, publish__year=year, publish__month=month, publish__day=day)
+    media_url = MEDIA_URL
 
     # List of active comments for this post
     comments = post.comments.filter(active=True)
@@ -97,7 +100,7 @@ def post_detail(request, year, month, day, post):
     similar_posts = Post.published.filter(tags__in=post_tags_ids).exclude(id=post.id)
     similar_posts = similar_posts.annotate(same_tags=Count('tags')).order_by('-same_tags', '-publish')[:4]
 
-    return render(request, 'blog/post/detail.html', {'post': post, 'comments': comments, 'comment_form': comment_form, 'similar_posts': similar_posts,})
+    return render(request, 'blog/post/detail.html', {'post': post, 'comments': comments, 'comment_form': comment_form, 'similar_posts': similar_posts, 'media_url': media_url,})
 
 
 def post_share(request, post_id):

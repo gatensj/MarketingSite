@@ -1,6 +1,5 @@
 {% load blog_tags %}
 {% load staticfiles %}
-{% load blog_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +32,18 @@
     <link href="{% static "css/fullPage.css" %}" rel="stylesheet" type="text/css"/>
     <link href="{% static "css/style.css" %}" rel="stylesheet"/>
     <script src="{% static "js/modernizr.js" %}"></script>
+	<!-- -->
+
+	<!-- -->
+	<style>
+	.contactSection {
+	background-color: #222222;
+	background-image: url("{{ media_url }}map-image.png") !important;
+	background-position: center;
+	background-repeat: no-repeat;
+	padding:150px 0px;
+	}
+	</style>
 	<!-- -->
 
 
@@ -344,10 +355,6 @@
 		<script src="{% static "js/materialmenu.js" %}"></script>
 		<script src="{% static "js/video-player.js" %}"></script>
 
-
-		<script src="{% static "quform/js/plugins.js" %}"></script>
-		<script src="{% static "quform/js/scripts.js" %}"></script>
-
 		<script src="{% static "js/jquery.fullPage.min.js" %}"></script>
 
 		<script src="{% static "js/custom.js" %}"></script>
@@ -355,36 +362,6 @@
 
     </div>
 	<!-- SCRIPT DIV STOP -->
-
-    <!-- -->
-	<script>
-	$( document ).ready(function() {
-
-		$("#my-gallery").unitegallery({
-			gallery_theme:"tiles"
-		});
-
-		$('img').each(
-		    function(){
-
-		        var attr = $(this).attr('data-image');
-
-		        if (typeof attr !== typeof undefined && attr !== false) {
-
-		            if (myCount < 1)
-		            {
-		            var text = $(this).attr('src');
-		            alert(text);
-		            text = text.replace("media/vagrant/projects/lynda/mysite/uploads/", "media/");
-		            $(this).attr('src', text);
-		            }
-
-		        }
-
-		    });
-	});
-	</script>
-	<!-- -->
 
 </body>
 <!-- -->
