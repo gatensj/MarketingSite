@@ -29,7 +29,7 @@ else:
     ENVIRONMENT = "dev"
 
 environ.Env.read_env(
-    '{0}/mysite/config/settings/{1}.env'.format(
+    'mysite/config/settings/{1}.env'.format(
         SITE_ROOT,
         ENVIRONMENT,
     )
@@ -262,7 +262,7 @@ with open('mysite/secrets/email_host_user.txt') as j:
 
 with open('mysite/secrets/email_pw.txt') as k:
     EMAIL_HOST_PASSWORD = k.read().strip()
-    
+
 '''
 
 EMAIL_PORT = 587
