@@ -14,7 +14,9 @@ removed from requirements for local dev
 
 removed from the proc file for local dev
 web: python manage.py runserver 0.0.0.0:$PORT
+# SECURITY WARNING: don't run with debug turned on in production! # DEBUG = False
 """
+
 import environ
 import os
 
@@ -29,12 +31,11 @@ else:
     ENVIRONMENT = "dev"
 
 environ.Env.read_env(
-    'mysite/config/settings/{1}.env'.format(
+    '{0}/mysite/config/settings/{1}.env'.format(
         SITE_ROOT,
         ENVIRONMENT,
     )
 )
-
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -43,14 +44,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 '''
 with open('mysite/secrets/secret_key.txt') as a:
     SECRET_KEY = a.read().strip()
-'''
 
 SECRET_KEY = env('SECRET_KEY', default='NOTASECRETKEY')
+'''
 
-# SECURITY WARNING: don't run with debug turned on in production! # DEBUG = False
-DEBUG = False
+with open('mysite/secrets/secret_key.txt') as a:
+    SECRET_KEY = a.read().strip()
 ####################################################################################
 
+
+DEBUG = False
 
 ALLOWED_HOSTS = ['vagrant.wharton.upenn.edu', 'localhost', 'marketingbye.com', 'opoa7vxe2l.execute-api.us-east-1.amazonaws.com']
 
@@ -145,12 +148,9 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 WAGTAIL_SITE_NAME = 'MarketingByE'
 
 
-########################################################################################################################################################################
-
 ####################################################################################
 #AWS settings
 '''
-#Figure this out - multiple mediator regression model
 with open('mysite/secrets/aws_region.txt') as b:
     AWS_REGION = b.read().strip()
 
@@ -160,13 +160,6 @@ with open('mysite/secrets/aws_access_key_id.txt') as c:
 with open('mysite/secrets/aws_secret_access_key.txt') as d:
     AWS_SECRET_ACCESS_KEY = d.read().strip()
 
-'''
-####################################################################################
-
-
-
-
-####################################################################################
 # The AWS region to connect to.
 AWS_REGION = env('AWS_REGION', default='NOTAWS_REGION')
 
@@ -175,6 +168,18 @@ AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default='NOTAWS_ACCESS_KEY_ID')
 
 # The AWS secret access key to use.
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', default='NOTAWS_SECRET_ACCESS_KEY')
+'''
+
+with open('mysite/secrets/aws_region.txt') as b:
+    AWS_REGION = b.read().strip()
+
+with open('mysite/secrets/aws_access_key_id.txt') as c:
+    AWS_ACCESS_KEY_ID = c.read().strip()
+
+with open('mysite/secrets/aws_secret_access_key.txt') as d:
+    AWS_SECRET_ACCESS_KEY = d.read().strip()
+####################################################################################
+
 
 AWS_S3_SECURE_URLS = False
 
@@ -204,18 +209,9 @@ DEFAULT_FILE_STORAGE = 'mysite.custom_storages.MediaStorage'
 MEDIA_URL = "http://marketingbye122222017.s3-website-us-east-1.amazonaws.com/mysite/uploads/"
 
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "uploads")
-####################################################################################
-
-
 
 
 ####################################################################################
-#DB var settings
-DB_NAME_HEROKU = env('DB_NAME_HEROKU', default='NOTDB_NAME')
-DB_USER_HEROKU = env('DB_USER_HEROKU', default='NOTDB_USER')
-DB_PW_HEROKU = env('DB_PW_HEROKU', default='NOTDB_PW')
-DB_HOST_HEROKU = env('DB_HOST_HEROKU', default='NOTDB_HOST')
-
 '''
 with open('mysite/secrets/db_name.txt') as e:
     DB_NAME_HEROKU = e.read().strip()
@@ -228,7 +224,26 @@ with open('mysite/secrets/db_pw.txt') as g:
 
 with open('mysite/secrets/db_host.txt') as h:
     DB_HOST_HEROKU = h.read().strip()
+
+DB_NAME_HEROKU = env('DB_NAME_HEROKU', default='NOTDB_NAME')
+DB_USER_HEROKU = env('DB_USER_HEROKU', default='NOTDB_USER')
+DB_PW_HEROKU = env('DB_PW_HEROKU', default='NOTDB_PW')
+DB_HOST_HEROKU = env('DB_HOST_HEROKU', default='NOTDB_HOST')
 '''
+
+with open('mysite/secrets/db_name.txt') as e:
+    DB_NAME_HEROKU = e.read().strip()
+
+with open('mysite/secrets/db_user.txt') as f:
+    DB_USER_HEROKU = f.read().strip()
+
+with open('mysite/secrets/db_pw.txt') as g:
+    DB_PW_HEROKU = g.read().strip()
+
+with open('mysite/secrets/db_host.txt') as h:
+    DB_HOST_HEROKU = h.read().strip()
+####################################################################################
+
 
 DATABASES = {
     'default': {
@@ -240,19 +255,9 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-####################################################################################
-
-
 
 
 ####################################################################################
-# EMAIL SETUP
-EMAIL_HOST = env('EMAIL_HOST', default='NOTEMAIL_HOST')
-
-EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='NOTEMAIL_HOST_USER')
-
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='NOTEMAIL_HOST_PASSWORD')
-
 '''
 with open('mysite/secrets/email_host.txt') as i:
     EMAIL_HOST = i.read().strip()
@@ -263,15 +268,27 @@ with open('mysite/secrets/email_host_user.txt') as j:
 with open('mysite/secrets/email_pw.txt') as k:
     EMAIL_HOST_PASSWORD = k.read().strip()
 
+EMAIL_HOST = env('EMAIL_HOST', default='NOTEMAIL_HOST')
+
+EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='NOTEMAIL_HOST_USER')
+
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='NOTEMAIL_HOST_PASSWORD')
 '''
+
+with open('mysite/secrets/email_host.txt') as i:
+    EMAIL_HOST = i.read().strip()
+
+with open('mysite/secrets/email_host_user.txt') as j:
+    EMAIL_HOST_USER = j.read().strip()
+
+with open('mysite/secrets/email_pw.txt') as k:
+    EMAIL_HOST_PASSWORD = k.read().strip()
+####################################################################################
+
 
 EMAIL_PORT = 587
 
 EMAIL_USE_TLS = True
-####################################################################################
-
-########################################################################################################################################################################
-
 
 AUTH_PASSWORD_VALIDATORS = [
    {
@@ -344,4 +361,3 @@ if DEBUG is True:
     MIDDLEWARE_CLASSES += [
         'debug_toolbar.middleware.DebugToolbarMiddleware',
     ]
-
