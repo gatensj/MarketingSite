@@ -15,3 +15,4 @@ pysolr==3.6.0
 zappa-django-utils==0.3.1
 boto3==1.5.5
 django-storages==1.6.5
+gunicorn==19.7.1

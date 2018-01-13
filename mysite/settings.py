@@ -8,6 +8,12 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
+
+removed from requirements for local dev
+#gunicorn==19.7.1
+
+removed from the proc file for local dev
+web: python manage.py runserver 0.0.0.0:$PORT
 """
 import environ
 import os
@@ -34,11 +40,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 ####################################################################################
+'''
 with open('mysite/secrets/secret_key.txt') as a:
     SECRET_KEY = a.read().strip()
 '''
+
 SECRET_KEY = env('SECRET_KEY', default='NOTASECRETKEY')
-'''
 
 # SECURITY WARNING: don't run with debug turned on in production! # DEBUG = False
 DEBUG = False
@@ -143,21 +150,6 @@ WAGTAIL_SITE_NAME = 'MarketingByE'
 ####################################################################################
 #AWS settings
 '''
-# The AWS region to connect to.
-AWS_REGION = env('AWS_REGION', default='NOTAWS_REGION')
-
-# The AWS access key to use.
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default='NOTAWS_ACCESS_KEY_ID')
-
-# The AWS secret access key to use.
-AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', default='NOTAWS_SECRET_ACCESS_KEY')
-'''
-####################################################################################
-
-
-
-
-####################################################################################
 #Figure this out - multiple mediator regression model
 with open('mysite/secrets/aws_region.txt') as b:
     AWS_REGION = b.read().strip()
@@ -167,6 +159,22 @@ with open('mysite/secrets/aws_access_key_id.txt') as c:
 
 with open('mysite/secrets/aws_secret_access_key.txt') as d:
     AWS_SECRET_ACCESS_KEY = d.read().strip()
+
+'''
+####################################################################################
+
+
+
+
+####################################################################################
+# The AWS region to connect to.
+AWS_REGION = env('AWS_REGION', default='NOTAWS_REGION')
+
+# The AWS access key to use.
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default='NOTAWS_ACCESS_KEY_ID')
+
+# The AWS secret access key to use.
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', default='NOTAWS_SECRET_ACCESS_KEY')
 
 AWS_S3_SECURE_URLS = False
 
@@ -203,6 +211,12 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "uploads")
 
 ####################################################################################
 #DB var settings
+DB_NAME_HEROKU = env('DB_NAME_HEROKU', default='NOTDB_NAME')
+DB_USER_HEROKU = env('DB_USER_HEROKU', default='NOTDB_USER')
+DB_PW_HEROKU = env('DB_PW_HEROKU', default='NOTDB_PW')
+DB_HOST_HEROKU = env('DB_HOST_HEROKU', default='NOTDB_HOST')
+
+'''
 with open('mysite/secrets/db_name.txt') as e:
     DB_NAME_HEROKU = e.read().strip()
 
@@ -214,13 +228,6 @@ with open('mysite/secrets/db_pw.txt') as g:
 
 with open('mysite/secrets/db_host.txt') as h:
     DB_HOST_HEROKU = h.read().strip()
-
-
-'''
-DB_NAME = env('DB_NAME', default='NOTDB_NAME')
-DB_USER = env('DB_USER', default='NOTDB_USER')
-DB_PW = env('DB_PW', default='NOTDB_PW')
-DB_HOST = env('DB_HOST', default='NOTDB_HOST')
 '''
 
 DATABASES = {
@@ -240,6 +247,13 @@ DATABASES = {
 
 ####################################################################################
 # EMAIL SETUP
+EMAIL_HOST = env('EMAIL_HOST', default='NOTEMAIL_HOST')
+
+EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='NOTEMAIL_HOST_USER')
+
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='NOTEMAIL_HOST_PASSWORD')
+
+'''
 with open('mysite/secrets/email_host.txt') as i:
     EMAIL_HOST = i.read().strip()
 
@@ -248,13 +262,7 @@ with open('mysite/secrets/email_host_user.txt') as j:
 
 with open('mysite/secrets/email_pw.txt') as k:
     EMAIL_HOST_PASSWORD = k.read().strip()
-
-'''
-EMAIL_HOST = env('EMAIL_HOST', default='NOTEMAIL_HOST')
-
-EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='NOTEMAIL_HOST_USER')
-
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='NOTEMAIL_HOST_PASSWORD')
+    
 '''
 
 EMAIL_PORT = 587
