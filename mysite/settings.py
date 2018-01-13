@@ -41,7 +41,7 @@ SECRET_KEY = env('SECRET_KEY', default='NOTASECRETKEY')
 '''
 
 # SECURITY WARNING: don't run with debug turned on in production! # DEBUG = False
-DEBUG = True
+DEBUG = False
 ####################################################################################
 
 
@@ -159,14 +159,14 @@ AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', default='NOTAWS_SECRET_ACCE
 
 ####################################################################################
 #Figure this out - multiple mediator regression model
-with open('mysite/secrets/aws_region.txt') as b1:
-    AWS_REGION = b1.read().strip()
+with open('mysite/secrets/aws_region.txt') as b:
+    AWS_REGION = b.read().strip()
 
-with open('mysite/secrets/aws_access_key_id.txt') as b2:
-    AWS_ACCESS_KEY_ID = b2.read().strip()
+with open('mysite/secrets/aws_access_key_id.txt') as c:
+    AWS_ACCESS_KEY_ID = c.read().strip()
 
-with open('mysite/secrets/aws_secret_access_key.txt') as b3:
-    AWS_SECRET_ACCESS_KEY = b3.read().strip()
+with open('mysite/secrets/aws_secret_access_key.txt') as d:
+    AWS_SECRET_ACCESS_KEY = d.read().strip()
 
 AWS_S3_SECURE_URLS = False
 
@@ -196,13 +196,6 @@ DEFAULT_FILE_STORAGE = 'mysite.custom_storages.MediaStorage'
 MEDIA_URL = "http://marketingbye122222017.s3-website-us-east-1.amazonaws.com/mysite/uploads/"
 
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "uploads")
-
-#BASE_DIR_MEDIA = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-#AWS_S3_CUSTOM_DOMAIN_MEDIA = 'marketingbye122222017.s3-website-us-east-1.amazonaws.com'
-#AWS_MEDIA_LOCATION = 'uploads'
-#MEDIA_URL = 'http://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN_MEDIA, AWS_MEDIA_LOCATION)
-#MEDIA_ROOT = os.path.join(BASE_DIR_MEDIA, '/uploads/')
-
 ####################################################################################
 
 
@@ -210,65 +203,36 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "uploads")
 
 ####################################################################################
 #DB var settings
-with open('mysite/secrets/db_name.txt') as b:
-    DB_NAME = b.read().strip()
+with open('mysite/secrets/db_name.txt') as e:
+    DB_NAME_HEROKU = e.read().strip()
 
-with open('mysite/secrets/db_user.txt') as c:
-    DB_USER = c.read().strip()
+with open('mysite/secrets/db_user.txt') as f:
+    DB_USER_HEROKU = f.read().strip()
 
-with open('mysite/secrets/db_pw.txt') as d:
-    DB_PW = d.read().strip()
+with open('mysite/secrets/db_pw.txt') as g:
+    DB_PW_HEROKU = g.read().strip()
+
+with open('mysite/secrets/db_host.txt') as h:
+    DB_HOST_HEROKU = h.read().strip()
+
 
 '''
 DB_NAME = env('DB_NAME', default='NOTDB_NAME')
-
 DB_USER = env('DB_USER', default='NOTDB_USER')
-
 DB_PW = env('DB_PW', default='NOTDB_PW')
+DB_HOST = env('DB_HOST', default='NOTDB_HOST')
 '''
-
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'zappa_django_utils.db.backends.s3sqlite',
-        'NAME': 'db.sqlite3',
-        'BUCKET': 'marketingbye122222017'
-    }
-}
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PW,
-        'HOST': 'vagrant.wharton.upenn.edu',
+        'NAME': DB_NAME_HEROKU,
+        'USER': DB_USER_HEROKU,
+        'PASSWORD': DB_PW_HEROKU,
+        'HOST': DB_HOST_HEROKU,
         'PORT': '5432',
     }
 }
-
-
-
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd6o38vi3bbc816',
-        'USER': 'cvktirvknoegwl',
-        'PASSWORD': '52ac8989367c280f17638a45fbaf0310aeb604916bf320f44701db12e29d4e21',
-        'HOST': 'ec2-107-21-109-15.compute-1.amazonaws.com',
-        'PORT': '5432',
-    }
-}
-
 ####################################################################################
 
 
@@ -276,14 +240,14 @@ DATABASES = {
 
 ####################################################################################
 # EMAIL SETUP
-with open('mysite/secrets/email_host.txt') as e:
-    EMAIL_HOST = e.read().strip()
+with open('mysite/secrets/email_host.txt') as i:
+    EMAIL_HOST = i.read().strip()
 
-with open('mysite/secrets/email_host_user.txt') as f:
-    EMAIL_HOST_USER = f.read().strip()
+with open('mysite/secrets/email_host_user.txt') as j:
+    EMAIL_HOST_USER = j.read().strip()
 
-with open('mysite/secrets/email_pw.txt') as g:
-    EMAIL_HOST_PASSWORD = g.read().strip()
+with open('mysite/secrets/email_pw.txt') as k:
+    EMAIL_HOST_PASSWORD = k.read().strip()
 
 '''
 EMAIL_HOST = env('EMAIL_HOST', default='NOTEMAIL_HOST')
@@ -363,7 +327,6 @@ if DEBUG is True:
 
     DEBUG_TOOLBAR_CONFIG = {
         "SHOW_TOOLBAR_CALLBACK": show_toolbar,
-        # "INTERCEPT_REDIRECTS": True,
     }
 
     INSTALLED_APPS += (
